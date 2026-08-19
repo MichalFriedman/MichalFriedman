@@ -1,58 +1,53 @@
 # Hellscore rehearsal reminder — Hebrew message + shortcut setup
 
 Fires from the `Saturday WhatsApp` automation (Saturdays 20:00) into the
-**Hellscore updates** WhatsApp group.
+**Hellscore updates** WhatsApp group, about the **Wednesday** rehearsal.
+The date fills itself in each week.
 
-## Message — version A (fixed text)
+## Build the shortcut
 
-Use this if the rehearsal is always at the same day/time/place.
+Four actions, in this order:
+
+| # | Action | Settings |
+|---|--------|----------|
+| 1 | **Date** | Current Date |
+| 2 | **Adjust Date** | *Add* `4` *Days* to the Date from step 1 — Saturday + 4 = Wednesday |
+| 3 | **Format Date** | Input: Adjusted Date · Date Format: **Custom** · format string `EEEE, d.M` |
+| 4 | **Send Message** (WhatsApp) | Recipient: *Hellscore updates* · Message: the text below |
+
+With the iPhone's language set to Hebrew, step 3 renders as `יום רביעי, 26.8`.
+
+## The message
+
+Paste this into the Message field, then delete `[Formatted Date]` and drop the
+**Formatted Date** variable in its place:
 
 ```
 היי הלסקוראים 🖤
-תזכורת לחזרה הקרובה — מחר, יום ראשון, בשעה 19:00 ב[מקום].
+תזכורת לחזרה הקרובה — ב[Formatted Date] בשעה [שעה], ב[מקום].
 מגיעים בזמן, עם התווים ועם בקבוק מים.
 נתראה! 🎶
 ```
 
-## Message — version B (date fills itself in)
+Fill in `[שעה]` and `[מקום]` with the rehearsal time and location.
 
-Use this if you want the actual date to appear, so the message stays right even
-if you change the automation's day.
-
-Build the shortcut with these four actions, in order:
-
-1. **Date** → set to *Current Date*
-2. **Adjust Date** → *Add* `1` *Days* to the Date from step 1
-3. **Format Date** → input = Adjusted Date, Date Format = *Custom*,
-   format string `EEEE, d.M`
-   (with the iPhone's language set to Hebrew this renders as `יום ראשון, 24.8`)
-4. **Send Message** (WhatsApp) → paste the text below into the Message field and
-   drop the **Formatted Date** variable where marked
-
-```
-היי הלסקוראים 🖤
-תזכורת לחזרה הקרובה — [Formatted Date] בשעה 19:00 ב[מקום].
-מגיעים בזמן, עם התווים ועם בקבוק מים.
-נתראה! 🎶
-```
-
-Change the `1` in step 2 to match how many days after Saturday the rehearsal
-falls (1 = Sunday, 2 = Monday, and so on).
+Copy-paste rather than retyping — pasting keeps the emoji and line breaks
+intact and saves you fighting the RTL cursor around the placeholders.
 
 ## Pointing it at the group
 
 In the **Send Message** action, tap **Recipient** and search `Hellscore`. Group
-chats show up in the picker alongside contacts.
+chats appear in the picker alongside contacts.
 
-If the group doesn't appear: open the Hellscore updates group in WhatsApp, send
-or read a message, then force-quit and reopen Shortcuts. iOS only offers
+If the group doesn't show up: open the Hellscore updates group in WhatsApp, send
+or read a message there, then force-quit and reopen Shortcuts. iOS only offers
 conversations WhatsApp has recently surfaced to the system.
 
-Then turn **Show When Run** off on both the Recipient and Message fields, as in
+Then turn **Show When Run** off on both the Recipient and Message fields, per
 `whatsapp-saturday-automation.md`.
 
-## Typing Hebrew into Shortcuts
+## Changing the rehearsal day later
 
-Copy the message block above and paste it into the Message field rather than
-retyping — pasting keeps the emoji and the line breaks intact, and avoids
-fighting the RTL cursor while editing around the `[מקום]` placeholder.
+Edit the number in step 2 — it's days after Saturday: `1` Sunday, `2` Monday,
+`3` Tuesday, `4` Wednesday, `5` Thursday. The weekday name in the message comes
+from the date itself, so nothing else needs touching.
